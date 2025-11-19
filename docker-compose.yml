@@ -1,0 +1,53 @@
+services:
+  db:
+    image: postgres:16
+    container_name: notes-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: rahasia123
+      POSTGRES_DB: notesdb
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: notes-backend
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: rahasia123
+      DB_NAME: notesdb
+      DB_SSLMODE: disable
+      JWT_SECRET: super-rahasia-jwt-1234567890abcdef
+      PORT: 8000
+      APP_URL: http://localhost:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/uploads
+
+  # FRONTEND
+  frontend:
+    build: ./notes-frontend
+    container_name: notes-frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000
+    depends_on:
+      - backend
+
+volumes:
+  postgres-data:
