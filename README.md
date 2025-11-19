@@ -39,7 +39,7 @@ Aplikasi berbagi notes dengan autentikasi JWT, CRUD notes, upload gambar, dan lo
 ## Contoh Log (Query DB)
 
       timestamp      | method | endpoint | status_code
----------------------+--------+----------+-------------
+
  2025-11-19 13:54:30 | GET    | /notes   |         200
  2025-11-19 13:54:29 | GETION | /notes/2 |         200
  2025-11-19 13:53:58 | GET    | /notes   |         200
