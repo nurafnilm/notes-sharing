@@ -1,26 +1,27 @@
 # Notes Sharing App
 
-Aplikasi berbagi notes dengan autentikasi JWT, CRUD notes, upload gambar (bonus), dan logging request/response ke DB. Stack: Next.js 16 (Frontend), Golang Fiber v2 (Backend), PostgreSQL 16 (DB), Docker Compose.
+Aplikasi berbagi notes dengan autentikasi JWT, CRUD notes, upload gambar, dan logging request/response ke DB. Stack: Next.js 16 (Frontend), Golang Fiber v2 (Backend), PostgreSQL 16 (DB), Docker Compose.
 
 ## Fitur
-- Register & Login dengan JWT (simpan di localStorage).
-- CRUD Notes: Create/Read/List/Delete (hanya owner bisa delete).
-- Upload gambar pada notes (multipart/form-data, simpan ke /uploads).
+- Register & Login dengan JWT Authentication.
+- CRUD Notes: Create/Read/List/Delete.
+- Upload gambar pada notes (simpan ke /uploads).
 - Logging: Setiap request/response dicatat ke table `logs` di DB (datetime, method/endpoint, masked headers, payload, response, status).
 - Deployment: Docker Compose dengan persistent DB + uploads.
 
 ## Tech Stack & Arsitektur
-- Frontend: Next.js App Router, Axios dengan JWT interceptor.
-- Backend: Fiber routes, GORM ORM, Bcrypt hash, JWT HS256.
-- DB: Postgres tables (users, notes, logs).
-- Docker: Volumes untuk persistence (postgres-data, uploads).
-
+- Frontend: Next.js.
+- Backend: Golang.
+- DB: PostgreSQL dengan docker, tables: users, notes, logs.
+- Deployment: Docker).
+- tambahan: JWT Authentication.
+  
 ## Setup
 
-### Local (Tanpa Docker)
+### Local
 #### Backend
 1. `cd backend && go mod tidy`
-2. Jalankan Postgres local (misal Docker: `docker run -p 5432:5432 -e POSTGRES_PASSWORD=rahasia123 -e POSTGRES_DB=notesdb postgres:16`).
+2. Jalankan Postgre local (misal Docker: `docker run -p 5432:5432 -e POSTGRES_PASSWORD=rahasia123 -e POSTGRES_DB=notesdb postgres:16`).
 3. `cp .env.example .env` → isi vars.
 4. `go run main.go` (port 8000).
 
@@ -29,7 +30,7 @@ Aplikasi berbagi notes dengan autentikasi JWT, CRUD notes, upload gambar (bonus)
 2. `cp .env.example .env.local` → isi `NEXT_PUBLIC_API_URL=http://localhost:8000`.
 3. `npm run dev` (port 3000).
 
-### Docker (Recommended)
+### Docker
 1. `cp .env.example .env` → isi vars.
 2. `mkdir uploads` (folder gambar).
 3. `docker-compose up --build`.
