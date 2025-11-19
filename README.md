@@ -37,6 +37,7 @@ Aplikasi berbagi notes dengan autentikasi JWT, CRUD notes, upload gambar, dan lo
 4. Akses: http://localhost:3000.
 
 ## Contoh Log (Query DB)
+
       timestamp      | method | endpoint | status_code
 ---------------------+--------+----------+-------------
  2025-11-19 13:54:30 | GET    | /notes   |         200
